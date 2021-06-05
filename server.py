@@ -42,6 +42,15 @@ def recieve():
 
         client.send('NICK'.encode('ascii'))
         nickname = client.recv(1024).decode('ascii')
+
+        if nickname == 'admin':
+            client.send('PASSWORD'.encode('ascii'))
+            password = client.recv(1024).decode('ascii')
+
+            if password != 'admin':
+                client.send('REFUSED')
+                client.close()
+                continue
         
         nicknames.append(nickname)
         clients.append(client)
